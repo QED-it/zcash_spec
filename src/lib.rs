@@ -16,4 +16,4 @@ mod prf_expand;
 pub use prf_expand::{PrfExpand, VariableLengthSlice};
 
 mod versioned_signature;
-pub use versioned_signature::{SighashVersion, VersionedSig, SIGHASH_V0};
+pub use versioned_signature::{SighashVersion, VersionedSig, SIGHASH_V0, get_compact_size};

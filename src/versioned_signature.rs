@@ -63,18 +63,12 @@ impl SighashVersion {
     pub fn to_bytes(&self) -> Vec<u8> {
         [vec![self.version], self.associated_data.clone()].concat()
     }
-
-    /// Encode the `SighashVersion` by starting with its compact size.
-    pub fn encode(&self) -> Vec<u8> {
-        let version_bytes = self.to_bytes();
-        [get_compact_size(version_bytes.len()), version_bytes].concat()
-    }
 }
 
 /// Encodes a size in the CompactSize format.
 ///
 /// Cannot use zcash_encoding crate to avoid circular dependency.
-fn get_compact_size(size: usize) -> Vec<u8> {
+pub fn get_compact_size(size: usize) -> Vec<u8> {
     match size {
         s if s < 253 => vec![s as u8],
         s if s <= 0xFFFF => [&[253_u8], &(s as u16).to_le_bytes()[..]].concat(),
