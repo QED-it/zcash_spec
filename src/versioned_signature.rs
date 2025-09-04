@@ -18,6 +18,19 @@ pub struct VersionedSig<S> {
     sig: S,
 }
 
+/// The sighash version and associated data
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SighashVersion {
+    version: u8,
+    associated_data: Vec<u8>,
+}
+
+/// The `SighashVersion` V0 for Transparent, Sapling, Orchard and issuance.
+pub const SIGHASH_V0: SighashVersion = SighashVersion {
+    version: 0x00,
+    associated_data: vec![],
+};
+
 impl<S> VersionedSig<S> {
     /// Constructs a new `VersionedSig` with the given version and signature.
     pub fn new(version: SighashVersion, sig: S) -> Self {
@@ -33,13 +46,6 @@ impl<S> VersionedSig<S> {
     pub fn sig(&self) -> &S {
         &self.sig
     }
-}
-
-/// The sighash version and associated data
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct SighashVersion {
-    version: u8,
-    associated_data: Vec<u8>,
 }
 
 impl SighashVersion {
@@ -65,12 +71,6 @@ impl SighashVersion {
     }
 }
 
-/// The `SighashVersion` V0 for Transparent, Sapling, Orchard and issuance.
-pub const SIGHASH_V0: SighashVersion = SighashVersion {
-    version: 0x00,
-    associated_data: vec![],
-};
-
 /// Encodes a size in the CompactSize format.
 ///
 /// Cannot use zcash_encoding crate to avoid circular dependency.
@@ -88,7 +88,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn sighash_version_from_to_bytes_roundtrip() {
+    fn sighash_version_encoding_roundtrip() {
         let bytes: [u8; 10] = [2u8; 10];
         let sighash_version = SighashVersion::from_bytes(&bytes).unwrap();
         assert_eq!(bytes[0], sighash_version.version);
