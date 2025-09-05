@@ -15,4 +15,4 @@
 mod prf_expand;
 pub use prf_expand::{PrfExpand, VariableLengthSlice};
 
-pub mod versioned_signature;
+pub mod sighash_versioning;

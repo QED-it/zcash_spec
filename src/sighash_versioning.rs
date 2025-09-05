@@ -1,4 +1,4 @@
-//! Versioned signatures.
+//! Sighash versioning.
 //!
 //! This module defines [`VersionedSig`], which pairs a signature with a [`SighashVersion`],
 //! as specified in [ZIP-246].
@@ -67,7 +67,10 @@ impl SighashVersion {
 
 /// Encodes a size in the CompactSize format.
 ///
-/// Cannot use zcash_encoding crate to avoid circular dependency.
+/// This implementation is inspired from `zcash_encoding::CompactSize::write` [code]
+/// We cannot use zcash_encoding crate to avoid circular dependency.
+///
+/// [code]: https://github.com/zcash/librustzcash/blob/8be259c579762f1b0f569453a20c0d0dbeae6c07/components/zcash_encoding/src/lib.rs#L93
 pub fn get_compact_size(size: usize) -> Vec<u8> {
     match size {
         s if s < 253 => vec![s as u8],
