@@ -14,3 +14,5 @@
 
 mod prf_expand;
 pub use prf_expand::{PrfExpand, VariableLengthSlice};
+
+pub mod sighash_versioning;
