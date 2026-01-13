@@ -101,6 +101,7 @@ impl PrfExpand<([u8; 32], [u8; 4])> {
 impl PrfExpand<([u8; 32], [u8; 32])> {
     pub const ORCHARD_DK_OVK: Self = Self::new(0x82);
     pub const ORCHARD_RIVK_INTERNAL: Self = Self::new(0x83);
+    pub const ORCHARD_DERIVED_ISSUE_RHO: Self = Self::new(0x84);
 }
 with_inputs!(a, A, b, B);
 
